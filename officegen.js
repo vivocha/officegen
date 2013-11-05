@@ -1169,7 +1169,7 @@ officegen = function ( options ) {
 											var shared_str_position = genobj.generate_data.shared_strings.length;
 											genobj.generate_data.cell_strings[i][rowId][columnId] = shared_str_position;
 											genobj.lookup_strings[ shared_str ] = shared_str_position;
-											genobj.generate_data.shared_strings[genobj.generate_data.shared_strings.length] = shared_str;
+											genobj.generate_data.shared_strings[shared_str_position] = shared_str;
 										} // Endif.
 										break;
 								} // End of switch.
