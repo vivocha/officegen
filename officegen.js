@@ -1138,6 +1138,7 @@ officegen = function ( options ) {
 	function cbPrepareXlsxToGenerate () {
 		genobj.generate_data = {};
 		genobj.generate_data.shared_strings = [];
+		genobj.lookup_strings = {};
 		genobj.generate_data.total_strings = 0;
 		genobj.generate_data.cell_strings = [];
 
@@ -1160,15 +1161,15 @@ officegen = function ( options ) {
 											genobj.generate_data.cell_strings[i][rowId] = [];
 										} // Endif.
 
-										for ( var j = 0, total_size_j = genobj.generate_data.shared_strings.length; j < total_size_j; j++ ) {
-											if ( gen_private.thisDoc.pages[i].sheet.data[rowId][columnId] == genobj.generate_data.shared_strings[j] ) {
-												genobj.generate_data.cell_strings[i][rowId][columnId] = j;
-											} // Endif.
-										} // Endif.
+										var shared_str = gen_private.thisDoc.pages[i].sheet.data[rowId][columnId];
 
-										if ( typeof genobj.generate_data.cell_strings[i][rowId][columnId] == 'undefined' ) {
-											genobj.generate_data.cell_strings[i][rowId][columnId] = genobj.generate_data.shared_strings.length;
-											genobj.generate_data.shared_strings[genobj.generate_data.shared_strings.length] = gen_private.thisDoc.pages[i].sheet.data[rowId][columnId];
+										if (shared_str in genobj.lookup_strings) {
+											genobj.generate_data.cell_strings[i][rowId][columnId] = genobj.lookup_strings[ shared_str ];
+										} else {
+											var shared_str_position = genobj.generate_data.shared_strings.length;
+											genobj.generate_data.cell_strings[i][rowId][columnId] = shared_str_position;
+											genobj.lookup_strings[ shared_str ] = shared_str_position;
+											genobj.generate_data.shared_strings[genobj.generate_data.shared_strings.length] = shared_str;
 										} // Endif.
 										break;
 								} // End of switch.
