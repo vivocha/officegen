@@ -35,8 +35,8 @@
 		"examples": "examples"
 	},
 	"dependencies": {
-		"setimmediate": ">= 1.0.1",
-		"archiver": ">= 0.4.4",
+		"setimmediate": "1.0.1",
+		"archiver": "0.4.4",
 		"fast-image-size": "*"
 	},
     "author": {
