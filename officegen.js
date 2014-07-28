@@ -1,4 +1,5 @@
-﻿//
+﻿/*global setTimeout */
+//
 // officegen - generating Office documents
 //
 // Please refer to README.md for this module's documentations.
@@ -28,7 +29,7 @@
 // SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 //
 
-require("setimmediate"); // To be compatible with all versions of node.js
+//require("setimmediate"); // To be compatible with all versions of node.js
 
 var officegen_info = require('./package.json');
 var archiver = require('archiver');
@@ -2192,13 +2193,13 @@ officegen = function ( options ) {
 						case 'custom':
 							resStream = new Stream ();
 							resStream.readable = true;
-							process.nextTick ( function() {
+							setTimeout( function() {
 								// The callback should emit data events and then end event. The problem is that we can't 
 								// call emit before the pipe starting to run. That's why we are not executing the callback 
 								// immediately but using the process.nextTick trick to make it to run after the pipe is 
 								// starting and someone is listening to our events.
 								gen_private.mixed.res_list[cur_index].callback ( resStream, gen_private.mixed.res_list[cur_index].data );
-							});
+							}, 3000);
 							break;
 						// BMK_STREAM: (***END***)
 
@@ -2219,16 +2220,16 @@ officegen = function ( options ) {
 						} // Endif.
 
 						archive.append ( resStream, { name: gen_private.mixed.res_list[cur_index].name }, function () {
-							setImmediate ( function() { generateNextResource ( cur_index + 1 ); });
+							setTimeout ( function() { generateNextResource ( cur_index + 1 ); }, 3000);
 						});
 						
 
 					} else {
-						setImmediate ( function() { generateNextResource ( cur_index + 1 ); });
+						setTimeout ( function() { generateNextResource ( cur_index + 1 ); }, 3000);
 					} // Endif.
 
 				} else {
-					setImmediate ( function() { generateNextResource ( cur_index + 1 ); });
+					setTimeout ( function() { generateNextResource ( cur_index + 1 ); }, 3000);
 				} // Endif.
 
 			} else {
